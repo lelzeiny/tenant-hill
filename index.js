@@ -3,13 +3,13 @@ const app = express();
 
 
 const bodyParser = require('body-parser');
-
- 
+const connectDatabase = require('./config/database');
+const houseRoutes = require('./routes/houseRoutes');
 
 
 app.use(express.json());
 app.use(bodyParser.json());
-
+app.use(houseRoutes);
 
 app.get('/api', (req, res) => {
     res.send("Hi Team"); 
@@ -18,7 +18,7 @@ app.get('/api', (req, res) => {
 // app.put();
 // app.delete(); 
 
-
+connectDatabase();
 
 app.listen(8000, () => {
 
