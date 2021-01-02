@@ -23,4 +23,3 @@ function App() {
 }
 
 export default App;
-https://github.com/lelzeiny/tenant-hill
