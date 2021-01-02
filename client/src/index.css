@@ -1,13 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&family=Staatliches&display=swap');
+/* 
+Black:      #15171d
+Dark Blue:  #34486a
+Light Blue: #6181b0
+Peach:      #febb79
+Brown:      #cc773c */
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Maven Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1{
+  font-size: 64px;
+  font-family: 'Staatliches', cursive;
+}
+
+.blackText{
+  font-size: 64px;
+  font-family: 'Staatliches', cursive;
+  color: #15171d;
+}
+
+.blueText{
+  font-size: 64px;
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.page-container{
+  margin: auto;
+  padding: 10px;
+  display: flex;
+  width: 100%;
+}
+
+#navbar{
+  background-color: #34486a;
+}
+
+#home-page{
+  height: 600px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#address-page{
+  flex-direction: column;
+  padding: 64px;
+  text-align: left;
+}
+
+#main-ratings{
+  width: 100%;
+  padding: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#main-ratings div a{
+  text-align: right;
+}
+
+#picture{
+  width: 400px;
+  height: 350px;
+  overflow: hidden;
+  background-color: black;
+}
+
+.rating-container{
+  margin: 10px;
+  padding: 10px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rating{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 128px;
+  height: 128px;
+  border-radius: 64px;
+  background-color: #febb79;
+}
+
+.review{
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+  border: #cc773c 2px double;
+}
+
+.review p{
+  line-height: 0px 1px;
+}
+
+#add-review{
+  height: 32px;
+  display: flex;
+  align-items: center;
+  background-color:#febb79;
+  border: 0px;
+}
+
+
+#rate{
+  font-size: 48px;
+  text-align: center;
+}
+
+.star{
+  font-size: 24px;
+  line-height: 0px;
+  padding-bottom:6px;
 }

@@ -2,23 +2,23 @@ const House = require('../models/house');
 const multer = require('multer');
 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads');
-    },
-    filename: (req, file, cb) => {
-        console.log(file);
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-}
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads');
+//     },
+//     filename: (req, file, cb) => {
+//         console.log(file);
+//         cb(null, Date.now() + path.extname(file.originalname));
+//     }
+// });
+// const fileFilter = (req, file, cb) => {
+//     if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+//         cb(null, true);
+//     } else {
+//         cb(null, false);
+//     }
+// }
+// const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
 const addHouse = async (req,res,next) => {
@@ -95,10 +95,26 @@ const priceComparison = async (req,res,next) => {
 
 
 
+const findHouseByQuery = async (req,res) => {
+    const {address} = req.body;
+
+
+    console.log("query", address);
+
+    // const house = await House.findOne({address: query}).exec()
+
+
+    // res.send(house); 
+
+}
+
+
+
 
 
 module.exports = {
     addHouse,
     commentOnHouse,
-    priceComparison
+    priceComparison,
+    findHouseByQuery
 }
