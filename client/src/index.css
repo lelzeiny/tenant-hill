@@ -15,7 +15,20 @@ body {
 }
 
 h1{
+  font-size: 64px;
   font-family: 'Staatliches', cursive;
+}
+
+.blackText{
+  font-size: 64px;
+  font-family: 'Staatliches', cursive;
+  color: #15171d;
+}
+
+.blueText{
+  font-size: 64px;
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
 }
 
 code {
@@ -23,17 +36,96 @@ code {
     monospace;
 }
 
+.page-container{
+  margin: auto;
+  padding: 10px;
+  display: flex;
+  width: 100%;
+}
+
 #navbar{
   background-color: #34486a;
 }
 
 #home-page{
-  margin: auto;
-  padding: 10px;
   height: 600px;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+#address-page{
+  flex-direction: column;
+  padding: 64px;
+  text-align: left;
+}
+
+#main-ratings{
+  width: 100%;
+  padding: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#main-ratings div a{
+  text-align: right;
+}
+
+#picture{
+  width: 400px;
+  height: 350px;
+  overflow: hidden;
+  background-color: black;
+}
+
+.rating-container{
+  margin: 10px;
+  padding: 10px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rating{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 128px;
+  height: 128px;
+  border-radius: 64px;
+  background-color: #febb79;
+}
+
+.review{
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+  border: #cc773c 2px double;
+}
+
+.review p{
+  line-height: 0px 1px;
+}
+
+#add-review{
+  height: 32px;
+  display: flex;
+  align-items: center;
+  background-color:#febb79;
+  border: 0px;
+}
+
+
+#rate{
+  font-size: 48px;
+  text-align: center;
+}
+
+.star{
+  font-size: 24px;
+  line-height: 0px;
+  padding-bottom:6px;
 }
