@@ -1,34 +1,32 @@
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import explained_variance_score
 import joblib
 import numpy as np
+import pandas as pd
 
 def train(X, y):
 
     # 80-20 train test split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-    reg = LinearRegression()
+    reg = LinearRegression(normalize=True)
     reg.fit(X_train, y_train)
     preds = reg.predict(X_test)
-    acc = accuracy_score(y_test, preds)
-    print(f'Successfully trained model with an accuracy of {acc:.2f}')
+    var = explained_variance_score(y_test.to_numpy(), preds)
+    print(f'Successfully trained model with a variance of {var:.2f}')
 
     return reg
 
 if __name__ == '__main__':
     
-    housing_data = ...
-    X = housing_data['data']
-    y = housing_data['target']
-    labels = {} # for changing non-numerical values to numbers (i.e. changing Wifi (Yes) to Wifi (1) )
-
-
-    y = np.vectorize(labels.__getitem__)(y)
+    housing_data = pd.read_csv('prediction_data.csv')
+    housing_data = housing_data.set_index('address')
+    X, y = housing_data.iloc[:,:-1], housing_data.iloc[:, -1]
+    # X = X.replace(['Yes', 'No'], [1, 0])
     mdl = train(X, y)
 
     #serialize model
-    joblib.dump(mdl, 'housing.mdl')
+    joblib.dump(mdl, 'ml_models/housing.mdl')
     
