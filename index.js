@@ -6,9 +6,16 @@ const bodyParser = require('body-parser');
 const connectDatabase = require('./config/database');
 const houseRoutes = require('./routes/houseRoutes');
 
+const multer = require('multer');
+const path = require('path');
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(houseRoutes);
 
 app.get('/api', (req, res) => {

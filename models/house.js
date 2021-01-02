@@ -12,6 +12,10 @@ const houseSchema = new mongoose.Schema({
     picture:{
         type:String, 
     },
+    peopleRating:{
+        type:Number,
+
+    },
     reviews:
     [
         {
@@ -24,8 +28,12 @@ const houseSchema = new mongoose.Schema({
             },
             contact:{
                 type:String, 
-                required: true
+                required: true,
             },
+            rating:{
+                type: Number, 
+                required: true,
+            }
         }
     ]
     

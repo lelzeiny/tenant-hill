@@ -1,5 +1,24 @@
-
 const House = require('../models/house');
+const multer = require('multer');
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
 const addHouse = async (req,res,next) => {
@@ -8,6 +27,7 @@ const addHouse = async (req,res,next) => {
     const user = await House.create({
         address: address, 
         price: price, 
+        peopleRating: 0,
     }).then(() => {
         console.log("register successfully"); 
     });
@@ -17,16 +37,19 @@ const addHouse = async (req,res,next) => {
 }
 
 
-const commentOnHouse = (req,res,next) => {
+const commentOnHouse = async (req,res,next) => {
     const id = req.params.id;
-    const {name,comment,contact} = req.body; 
-    House.findByIdAndUpdate(req.params.id, 
-        {$push: {"reviews": {
-                name: name,
-                comment: comment,
-                contact: contact,
-               
-            }}
+    const {name,comment,contact, rating} = req.body; 
+    const house = await House.findById(id); 
+    await House.findByIdAndUpdate(req.params.id, 
+        {   $push: {"reviews": {
+                    name: name,
+                    comment: comment,
+                    contact: contact,
+                    rating: rating
+                }},
+            
+           
         }
         ,
         (err) => {
@@ -34,6 +57,15 @@ const commentOnHouse = (req,res,next) => {
             console.log("successfully update job description"); 
         }
     )
+
+
+    await House.findByIdAndUpdate(req.params.id, {
+        peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1),  
+    }, (err) => {
+        console.log(err); 
+        console.log("update rating")
+    })
+   
 }
 
 
