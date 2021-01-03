@@ -30,13 +30,15 @@ class NavBar extends React.Component{
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Navbar.Brand href="#home">Tenant Hill</Navbar.Brand>
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Navbar.Brand href="/2424-Haste">Tenant Hill</Navbar.Brand>
+            <Nav.Link href="/">Check a Price</Nav.Link>
+            <Nav.Link href="/">Find Deals</Nav.Link>
           </Nav>
           <Form inline>
             <FormControl id="searchform" type="text" placeholder="Address" className="mr-sm-2" />
             <Button onClick={handleSubmit} variant="outline-light">Search</Button>
           </Form>
+          <CreateListing/>
         </Navbar.Collapse>
       </Navbar> 
      
@@ -44,16 +46,26 @@ class NavBar extends React.Component{
   }
 }
 
+
+
 class HomePage extends React.Component {
   render() {
     return (
       <div id="home-page" className="page-container">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <h1>Good deals on your hill</h1>
-        <Form inline>
-          <FormControl type="text" placeholder="Address" className="mr-sm-2" />
-          <Button variant="warning">Search</Button>
-        </Form>
+        <div id="welcome">
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          <h1>Good deals on your hill</h1>
+          <Form inline>
+            <FormControl type="text" placeholder="Address" className="mr-sm-2" />
+            <Button variant="warning">Search</Button>
+          </Form>
+        </div>
+        <div id="mission">
+          <h1>Our Mission</h1>
+          <p>At Tenant Hill, our goal is to assist you in finding the most affordable, 'worth-it' living situation in your area. With housing insecurities on the rise during the pandemic, renters have found it increasingly difficult to face inflated prices and seemingly impossible living situations.</p>
+          <p>We want to make sure you are being offered the best deals possible; with advanced machine learning techniques, we predict the price of an apartment in your area and compare it to the listing price to see if it's worth it for its price. Using features such as the available rooms, amenities,
+             and area of the property, we ensure that everything is taken into account when deciding how to rate an apartment, just for you. Apartments also have testimonies from previous tenants, with whom you can chat and discuss whether or not it's the right place for you. We welcome you with open arms, the hill awaits!</p>
+        </div>
       </div>
     );
   }
@@ -76,6 +88,59 @@ class Review extends React.Component{
       </div>
     );
   }
+}
+
+function CreateListing() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <div style={{margin:"0px 8px"}}>
+      <Button id="add-listing" variant="light" onClick={handleShow}>
+        <img src={plus_icon}/>&nbsp;&nbsp;Listing
+      </Button>
+
+      <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add an Apartment to Tenant Hill</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+              <InputGroup.Text>Address</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl placeholder="10000 Outer Space St"/>
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+              <InputGroup.Text>$</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              placeholder="3000"
+            />
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+              <InputGroup.Text>Sq ft</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              placeholder="Square footage"
+            />
+          </InputGroup>
+          <label class="container">&nbsp;&nbsp;Laundry<input type="checkbox"/> <span class="checkmark"></span></label>
+          <label class="container">&nbsp;&nbsp;Wifi<input type="checkbox"/> <span class="checkmark"></span></label>
+          <br/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </ div>
+  );
 }
 
 function CreateReview() {
@@ -177,18 +242,17 @@ function App() {
   document.title = 'Tenant Hill';
   return (
     <div className="App">
-
-        <Router>
-         
-          
-         <Switch>
-             <Route component={Upload} path="/upload" />
-             <Route component={Home} path="/home" />
-         </Switch>
-     </Router>
-      
       <NavBar />
-      {/* <AddressPage picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg" address="2424 Haste Street" our_rating="Good" people_rating="68%"/> */}
+      <BrowserRouter>
+        <Switch>
+          <Route path="/2424-Haste">
+            <AddressPage picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg" address="2424 Haste Street" our_rating="Good" people_rating="68%"/>
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
