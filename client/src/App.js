@@ -1,33 +1,40 @@
 import logo from './logo.svg';
 import plus_icon from './add.png';
 import './App.css';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Row, Form, Button, FormControl, InputGroup, Modal, Card, OverlayTrigger, Popover, ListGroup } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
-import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useLocation,Redirect,useHistory
+ } from 'react-router-dom';
 import Upload from './pages/Upload.js';
 import Home from './pages/Home.js';
 import axios from 'axios'; 
 import Alert from './components/Alert'; 
-import {Autocomplete} from 'react-autocomplete';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-class NavBar extends React.Component{
-  render(){
+
+const NavBar = () => {
+  
+    const history = useHistory();
+
 
     async function handleSubmit(e){
       e.preventDefault(); 
       const nameValue = document.getElementById("searchform").value;
       console.log("value", nameValue); 
       
-      await axios.post('http://localhost:8000/api/findhouse', {
-        
+      await axios.post('http://localhost:8000/api/getaddress', {
           address: nameValue
-        
-      }).then(() => {
-        console.log("send successfully");
+      }).then((data) => {
+        console.log("send successfully",data.data._id);
+        history.push(`apartment?id=${data.data._id}`);
       })
+      // ?id=${data.data._id}
+
+
+    }
+    const login = () => {
+      console.log("clicking"); 
+      history.push(`/apartment?id=12341513451`);
     }
     return(
        <Navbar id="navbar" variant="dark" expand="lg">
@@ -48,7 +55,7 @@ class NavBar extends React.Component{
       </Navbar> 
      
     )
-  }
+  
 }
 
 
@@ -96,7 +103,7 @@ class ZipcodePage extends React.Component {
           <h1>Find Apartments Near You</h1>
           <Form inline>
             <FormControl type="text" placeholder="Zipcode" className="mr-sm-2" />
-            <Button variant="warning">Search</Button>
+            <Button  variant="warning">Search</Button>
           </Form>
         </div>
       </div>
@@ -355,10 +362,26 @@ const  CreateReview = (props) => {
 }
 
 function AddressPage(props) {
+
+
   const { search } = useLocation();
   const match = search.match(/id=(.*)/);
   const id = match?.[1];
-
+  const [returnData, setReturnData] = useState(null); 
+  useEffect(() => {
+    console.log("getting id", id);
+    console.log("gettiing id", props.params); 
+    axios.get(`http://localhost:8000/api/gethouse/${id}`)
+    .then((data) => {
+      console.log("data", data.data); 
+      setReturnData(data.data); 
+    })
+    .catch((err) => {
+      console.log("err", err); 
+    })
+  }, [])
+  
+  console.log("getting id", id);
   //send query to backend
   let apt_data = {
     title: "Jones Berkeley",
@@ -395,9 +418,70 @@ function AddressPage(props) {
   const avg_rating = 68;
 
   return (
+   
     <div id="address-page" className="page-container">
-      {/* <img src={logo} className="App-logo" alt="logo" /> */}
-      <div className="two-tone-text">
+       {returnData !== null ? <div>
+        <div className="two-tone-text">
+        <span className="blueText">The Deal</span>&nbsp;<span className="blackText">with {returnData.address}</span>
+      </div>
+      <div id="main-ratings">
+        <div id="picture">
+          <img src={returnData.picture} height="350"/>
+        </div>
+        <div className="main-cols">
+          <h4 className="blackTextSmall"> List Price</h4>
+          <div className="pricing"><h1>{returnData.price}</h1></div>
+          
+          
+          <div className="rating-container">
+            <h4 className="blackTextSmall">The Anthill rated this...</h4>
+            
+            <div className="rating"><h1>{our_rating}</h1></div>
+            <a href="#our-rating">See why &rsaquo;</a>
+          </div>
+        </div>
+        <div className="main-cols">
+          
+          <h4 className="blackTextSmall" > Estimated Price</h4>
+          <div className="pricing"><h1>{apt_data["estimatedPrice"]}</h1></div>
+
+          <div className="rating-container">
+            <h4 className="blackTextSmall">People rated this...</h4>
+            <div className="rating"><h1>{avg_rating}%</h1></div>
+            <a href="#people-rating">See why &rsaquo;</a>
+          </div>
+        </div>
+      </div>
+      <div id="our-rating">
+        <div className="two-tone-text">
+          <span className="blueText">Our</span>&nbsp;&nbsp;<span className="blackText">Rating</span>
+        </div>
+        <p className="darkBlueTextSmall">Your listing is valued at {apt_data["actual_price"]} whereas we estimated 
+        the cost to be {apt_data["estimatedPrice"]}. We based our evaluation on the following properties:</p>
+        <LabelText before="Dogs Allowed:" after={apt_data["dog"].toString()}/>
+        <LabelText before="Cats Allowed:" after={apt_data["cat"].toString()}/>
+        <LabelText before="Indoor Gym:" after={apt_data["gym"].toString()}/>
+        <LabelText before="Dishwasher:" after={apt_data["dishwasher"].toString()}/>
+        <LabelText before="AC:" after={apt_data["ac"].toString()}/>
+        <LabelText before="Laundry:" after={apt_data["laundry"].toString()}/>
+      </div>
+      <div id="people-rating">
+        <div className="inline">
+          <div className="two-tone-text">
+            <span className="blueText">The People's</span>&nbsp;&nbsp;<span className="blackText">Rating</span>
+          </div>
+          <CreateReview houseId={returnData._id} />
+        </div>
+        {returnData.reviews.map(item => (
+          <Review rating={item.rating} name={item.name} description={item.comment}></Review>
+        ))}
+      </div>
+       </div> 
+       
+       // contitional here
+       
+       : <div>
+        <div className="two-tone-text">
         <span className="blueText">The Deal</span>&nbsp;<span className="blackText">with {apt_data["address"]}</span>
       </div>
       <div id="main-ratings">
@@ -452,6 +536,9 @@ function AddressPage(props) {
           <Review rating={rating["rating"]} name={rating["fullname"]} description={rating["description"]}></Review>
         ))}
       </div>
+       </div> }
+      {/* <img src={logo} className="App-logo" alt="logo" /> */}
+     
     </div>
   );
 }
@@ -478,6 +565,13 @@ function HouseListingsPage(){
   const { search } = useLocation();
   const match = search.match(/zipcode=(.*)/);
   const zipcode = match?.[1];
+  console.log("zupcode", zipcode); 
+  const [returnData, setReturnData] = useState(null); 
+  useEffect(async () => {
+    await axios.get(`http://localhost:8000/api/getzipcode/${zipcode}`).then((data) =>{
+      console.log("success listings", data.data);
+    }).catch((err)=>console.log(err));
+  }, [])
   let listings = {
     "1234123545":{
       price: 1200,
@@ -507,14 +601,36 @@ function HouseListingsPage(){
   //send query to backend
   return(
     <div id="listings-page" className="page-container">
-      <div className="two-tone-text">
+
+      {returnData !== null ? <div>
+
+        <div className="two-tone-text">
       <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
       </div>
       <div id="listings">
-        {Object.values(listings).map(apt => (
+        {returnData.map(apt => (
           <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={apt["imgUrl"]}/>
         ))}
       </div>
+
+      </div> 
+      
+      
+      
+      //conditiona;
+      
+      : <div>
+        
+        <div className="two-tone-text">
+          <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
+          </div>
+          <div id="listings">
+            {Object.values(listings).map(apt => (
+              <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={apt["imgUrl"]}/>
+            ))}
+          </div>
+      </div>}
+          
     </div>
   );
 }
@@ -523,12 +639,16 @@ function App() {
   document.title = 'Tenant Hill';
   return (
     <div className="App">
-      <NavBar />
+      
 
       <BrowserRouter>
+        <NavBar />
         <Switch>
+          <Route path="/apartment/:id">
+            <AddressPage/>
+          </Route>
           <Route path="/apartment">
-          <AddressPage picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"/>
+            <AddressPage/>
           </Route>
           <Route path="/zipcode">
             <ZipcodePage />

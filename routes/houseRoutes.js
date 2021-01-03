@@ -42,6 +42,30 @@ const axios = require('axios')
 
 router.post('/api/house', addHouse);
 router.post('/api/house/:id', commentOnHouse);
+
+router.get('/api/gethouse/:id', async (req,res) => {
+    const house = await House.findById(req.params.id); 
+    return res.send(house); 
+});
+
+router.get('/api/getzipcode/:id', async (req,res) => {
+    console.log("I am here", req.params.id.toString()); 
+    const zipcode = req.params.id.toString(); 
+    const house = await House.find({zipcode: zipcode}); 
+    console.log("house", house);
+    
+    res.send(house);
+} )
+
+
+router.post('/api/getaddress', async (req,res) => {
+    const {address} = req.body; 
+    console.log(req.body); 
+    console.log("address", address); 
+    const house = await House.findOne({address: address});
+    console.log(house); 
+    res.send(house); 
+});
 router.post('/api/findhouse', async (req,res) => {
     const {address} = req.body; 
     console.log(req.body); 
