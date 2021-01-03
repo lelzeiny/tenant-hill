@@ -129,11 +129,11 @@ class AddressPage extends React.Component {
           </div>
           <div className="main-cols">
             <h4 className="blackTextSmall"> List Price</h4>
-            <div className="rating"><h1>{this.props.actual_price}</h1></div>
+            <div className="pricing"><h1>{this.props.actual_price}</h1></div>
             
             
             <div className="rating-container">
-              <h4 className="blueTextSmall">The Anthill rated this...</h4>
+              <h4 className="blackTextSmall">The Anthill rated this...</h4>
               
               <div className="rating"><h1>{this.props.our_rating}</h1></div>
               <a href="#our-rating">See why &rsaquo;</a>
@@ -141,8 +141,8 @@ class AddressPage extends React.Component {
           </div>
           <div className="main-cols">
             
-            <h4 className="blueTextSmall" > Estimated Price</h4>
-            <div className="rating"><h1>{this.props.estimated_price}</h1></div>
+            <h4 className="blackTextSmall" > Estimated Price</h4>
+            <div className="pricing"><h1>{this.props.estimated_price}</h1></div>
 
             <div className="rating-container">
               <h4 className="blackTextSmall">People rated this...</h4>

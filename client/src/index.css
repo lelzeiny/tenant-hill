@@ -113,6 +113,12 @@ code {
   justify-content: left;
 }
 
+.rating-container a{
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
+  font-size: 18px;
+}
+
 .rating{
   display: flex;
   justify-content: center;
@@ -121,6 +127,16 @@ code {
   height: 128px;
   border-radius: 64px;
   background-color: #febb79;
+}
+
+.pricing{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 128px;
+  height: 128px;
+  border-radius: 64px;
+  background-color: #cc773c;
 }
 
 .review{
