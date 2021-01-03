@@ -10,6 +10,7 @@ const House = require('../models/house');
 
 const multer = require('multer');
 const path = require('path');
+const axios = require('axios')
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -47,6 +48,9 @@ router.post('/api/findhouse', async (req,res) => {
     console.log("address", address); 
     const house = await House.findOne({address: address}).exec();
     console.log(house); 
+    axios.post('http://localhost:1080/predict', {
+        house: house, 
+    });
     res.send(house); 
 });
 router.get('/api/house/price/:id', priceComparison); 

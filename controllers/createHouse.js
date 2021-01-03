@@ -1,6 +1,6 @@
 const House = require('../models/house');
 const multer = require('multer');
-
+const {cloudinary} = require('../utils/cloudinary');
 
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -22,17 +22,37 @@ const multer = require('multer');
 
 
 const addHouse = async (req,res,next) => {
-    const {address, price} = req.body; 
 
-    const user = await House.create({
-        address: address, 
-        price: price, 
-        peopleRating: 0,
-    }).then(() => {
-        console.log("register successfully"); 
-    });
 
-    res.send(user); 
+    console.log("getting to upload");
+    try {
+        const fileStr = req.body.data;
+        const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+            upload_preset: 'j4pfojws',
+        });
+        console.log(uploadResponse);
+
+
+        const {address, price} = req.body; 
+
+        const user = await House.create({
+            address: address, 
+            price: price, 
+            picture: uploadResponse.url,
+            peopleRating: 0,
+        }).then(() => {
+            console.log("register successfully"); 
+        });
+    
+        res.send(user); 
+       
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Something went wrong' });
+    }
+
+
+   
 
 }
 
@@ -48,7 +68,9 @@ const commentOnHouse = async (req,res,next) => {
                     contact: contact,
                     rating: rating
                 }},
-            
+            $set:{
+                peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1)
+            }
            
         }
         ,
@@ -59,12 +81,12 @@ const commentOnHouse = async (req,res,next) => {
     )
 
 
-    await House.findByIdAndUpdate(req.params.id, {
-        peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1),  
-    }, (err) => {
-        console.log(err); 
-        console.log("update rating")
-    })
+    // await House.findByIdAndUpdate(req.params.id, {
+    //     peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1),  
+    // }, (err) => {
+    //     console.log(err); 
+    //     console.log("update rating")
+    // })
    
 }
 
