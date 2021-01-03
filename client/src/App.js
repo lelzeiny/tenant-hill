@@ -6,9 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Form, Button, FormControl, InputGroup, Modal, Card, OverlayTrigger, Popover } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
-import Upload from './pages/Upload.js';
-import Home from './pages/Home.js';
-import axios from 'axios';
+
 
 class NavBar extends React.Component{
   render(){
