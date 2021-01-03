@@ -287,7 +287,7 @@ function CreateListing() {
 }
 
 const  CreateReview = (props) => {
-  const { rating } = 1;
+  const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -295,7 +295,8 @@ const  CreateReview = (props) => {
   const handleReview = async () => {
 
     const fullname = document.getElementById('fullname').value; 
-    const fullemail = document.getElementById('fullemail').value;
+    const fullemail = document.getElementById('fullemail').value; 
+    const rating = 1; 
     const review = document.getElementById('thought').value; 
     console.log("rate", rating);
     console.log("fullname", fullname); 
@@ -336,15 +337,11 @@ const  CreateReview = (props) => {
               placeholder="Contact"
             />
           </InputGroup>
-          <label class="container"> <input type="checkbox" id="opt-in"/><span class="checkmark"></span>
-            <label for="contact" class="checkboxContainer">&nbsp;&nbsp;&nbsp;Allow Contact From Residents</label>
-          </label>
           <br/>
           <StarRatingComponent id="rate" className="star"
               name="create"
               editing={true}
               starCount={5}
-              value={rating}
             />
           <FormControl id="thought" as="textarea" placeholder="Pour your heart out." />
         </Modal.Body>
