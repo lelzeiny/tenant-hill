@@ -3,7 +3,7 @@ import plus_icon from './add.png';
 import './App.css';
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Form, Button, FormControl, InputGroup, Modal, Card, ListGroup } from 'react-bootstrap';
+import { Navbar, Nav, Row, Form, Button, FormControl, InputGroup, Modal, Card, ListGroup } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Upload from './pages/Upload.js';
@@ -209,8 +209,31 @@ function CreateListing() {
               placeholder="Square footage"
             />
           </InputGroup>
-          <label class="container">&nbsp;&nbsp;&nbsp;Laundry<input type="checkbox"/> <span class="checkmark"></span></label>
-          <label class="container">&nbsp;&nbsp;&nbsp;Wifi<input type="checkbox"/> <span class="checkmark"></span></label>
+
+          
+          <label class="container"> <input type="checkbox" id="dogs"/><span class="checkmark"></span>
+            <label for="dogs"class="checkboxContainer">&nbsp;&nbsp;&nbsp;Allow Dogs</label>
+          </label>
+
+          <label class="container"> <input type="checkbox" id="cats"/><span class="checkmark"></span>
+            <label for="cats"class="checkboxContainer">&nbsp;&nbsp;&nbsp;Allow Cats</label>
+          </label>
+          <label class="container"> <input type="checkbox" id="dishwasher"/><span class="checkmark"></span>
+            <label for="dishwasher"class="checkboxContainer">&nbsp;&nbsp;&nbsp;In-House Dishwasher</label>
+          </label>
+          <label class="container"> <input type="checkbox" id="ac"/><span class="checkmark"></span>
+            <label for="ac"class="checkboxContainer">&nbsp;&nbsp;&nbsp;AC</label>
+          </label>
+          <label class="container"> <input type="checkbox" id="laundry"/><span class="checkmark"></span>
+            <label for="laundry"class="checkboxContainer">&nbsp;&nbsp;&nbsp;Laundry</label>
+          </label>
+          <label class="container"> <input type="checkbox" id="park"/><span class="checkmark"></span>
+            <label for="park"class="checkboxContainer">&nbsp;&nbsp;&nbsp;Parking</label>
+          </label>
+          <label class="container"> <input type="checkbox" id="gym"/><span class="checkmark"></span>
+            <label for="gym"class="checkboxContainer">&nbsp;&nbsp;&nbsp;Gym</label>
+          </label>
+          
           <br/>
 
           {/* <Alert msg={errMsg} type="danger" />
