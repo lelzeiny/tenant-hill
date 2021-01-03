@@ -12,6 +12,7 @@ import street_addresses from './street-addresses.json';
 import Autosuggest from 'react-autosuggest';
 
 let imgUrl = Object.values(imgUrl_);
+console.log("img", imgUrl.pop())
 
 const NavBar = () => {
   const history = useHistory();
@@ -40,7 +41,7 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Navbar.Brand href="/apartment?id=2424-Haste">Tenant Hill</Navbar.Brand>
+            <Navbar.Brand href="/">Tenant Hill</Navbar.Brand>
             <Nav.Link href="/">Check a Price</Nav.Link>
             <Nav.Link href="/zipcode">Find Deals</Nav.Link>
           </Nav>
@@ -84,7 +85,50 @@ function renderSuggestion(suggestion) {
   );
 }
 
-class HomePage extends React.Component {
+const HomePage = () =>  {
+
+  const history = useHistory();
+
+  const onSubmitZip = (e) => {
+    e.preventDefault(); 
+    const zip = document.getElementById('zipcode').value; 
+    history.push(`listings?zipcode=${zip}`)
+  }
+
+ 
+    return (
+      <div id="home-page" className="page-container">
+        <div className="welcome">
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          <h1>Good deals on your hill</h1>
+          <Form inline>
+            <FormControl id="zipcode" type="text" placeholder="Zip Code" className="mr-sm-2" />
+            <Button onClick={onSubmitZip} variant="warning">Search</Button>
+          </Form>
+        </div>
+        <div id="mission">
+          <h1>Our Mission</h1>
+          <p>At Tenant Hill, our goal is to assist you in finding the most affordable, 'worth-it' living situation in your area. With housing insecurities on the rise during the pandemic, renters have found it increasingly difficult to face inflated prices and seemingly impossible living situations.</p>
+          <p>We want to make sure you are being offered the best deals possible; with advanced machine learning techniques, we predict the price of an apartment in your area and compare it to the listing price to see if it's worth it for its price. Using features such as the available rooms, amenities,
+             and area of the property, we ensure that everything is taken into account when deciding how to rate an apartment, just for you. Apartments also have testimonies from previous tenants, with whom you can chat and discuss whether or not it's the right place for you. We welcome you with open arms, the hill awaits!</p>
+        </div>
+      </div>
+    );
+  
+}
+
+class LabelText extends React.Component{
+  render(){
+    return(
+      <div style={{display:"flex"}}>
+        <p style={{fontWeight: "bold", color: "#6181b0"}}>{this.props.before}</p>
+        <p>&nbsp;{this.props.after}</p>
+      </div>
+    );
+  }
+}
+
+class ZipcodePage extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -117,12 +161,11 @@ class HomePage extends React.Component {
       value,
       onChange: this.onChange
     };
-
     return (
-      <div id="home-page" className="page-container">
-        <div className="welcome">
+      <div id="zipcode-page" className="page-container">
+        <div className="welcome" id="bg-2">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <h1>Good deals on your hill</h1>
+          <h1>Evaluate Listing Prices</h1>
           <Form inline>
             <Autosuggest 
             suggestions={suggestions}
@@ -131,42 +174,7 @@ class HomePage extends React.Component {
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps} />
-            <FormControl type="text" placeholder="Address" className="mr-sm-2" />
             <Button variant="warning">Search</Button>
-          </Form>
-        </div>
-        <div id="mission">
-          <h1>Our Mission</h1>
-          <p>At Tenant Hill, our goal is to assist you in finding the most affordable, 'worth-it' living situation in your area. With housing insecurities on the rise during the pandemic, renters have found it increasingly difficult to face inflated prices and seemingly impossible living situations.</p>
-          <p>We want to make sure you are being offered the best deals possible; with advanced machine learning techniques, we predict the price of an apartment in your area and compare it to the listing price to see if it's worth it for its price. Using features such as the available rooms, amenities,
-             and area of the property, we ensure that everything is taken into account when deciding how to rate an apartment, just for you. Apartments also have testimonies from previous tenants, with whom you can chat and discuss whether or not it's the right place for you. We welcome you with open arms, the hill awaits!</p>
-        </div>
-      </div>
-    );
-  }
-}
-
-class LabelText extends React.Component{
-  render(){
-    return(
-      <div style={{display:"flex"}}>
-        <p style={{fontWeight: "bold", color: "#6181b0"}}>{this.props.before}</p>
-        <p>&nbsp;{this.props.after}</p>
-      </div>
-    );
-  }
-}
-
-class ZipcodePage extends React.Component {
-  render() {
-    return (
-      <div id="zipcode-page" className="page-container">
-        <div className="welcome" id="bg-2">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <h1>Find Apartments Near You</h1>
-          <Form inline>
-            <FormControl type="text" placeholder="Zipcode" className="mr-sm-2" />
-            <Button  variant="warning">Search</Button>
           </Form>
         </div>
       </div>
@@ -348,21 +356,27 @@ function CreateListing() {
   );
 }
 
-const  CreateReview = (props) => {
+const CreateReview = (props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [rating, setRating] = useState(1);
+
+
+  
+
   const handleReview = async () => {
 
     const fullname = document.getElementById('fullname').value; 
     const fullemail = document.getElementById('fullemail').value; 
-    const rating = 1; 
+    
     const review = document.getElementById('thought').value; 
     console.log("rate", rating);
     console.log("fullname", fullname); 
     console.log("id", props.houseId); 
+  
     await axios.post(`http://localhost:8000/api/house/${props.houseId}`, {
       
         name: fullname, 
@@ -404,6 +418,10 @@ const  CreateReview = (props) => {
               name="create"
               editing={true}
               starCount={5}
+              value={rating}
+              onStarClick={ (nextValue, prevValue, name) => {
+                setRating(nextValue);
+              }}
             />
           <FormControl id="thought" as="textarea" placeholder="Pour your heart out." />
         </Modal.Body>
@@ -491,7 +509,7 @@ function AddressPage(props) {
           <div className="rating-container">
             <h4 className="blackTextSmall">The Anthill rated this...</h4>
             
-            <div className="rating"><h1>{our_rating}</h1></div>
+            <div className="rating"><h1>{returnData.rating}%</h1></div>
             <a href="#our-rating">See why &rsaquo;</a>
           </div>
         </div>
@@ -604,7 +622,7 @@ class HouseCard extends React.Component{
       <Card style={{ width: '18rem', margin: "10px"}}>
         <Card.Img variant="top" src={this.props.picture} />
         <Card.Body>
-          <Card.Title class="card-title">{this.props.address}<Badge variant="primary" style={{fontWeight: "lighter"}}>Rated {this.props.ranking}%</Badge></Card.Title>
+          <Card.Title class="card-title">{this.props.address}<Badge variant="primary" style={{fontWeight: "lighter", margin:"8px"}}>{this.props.ranking}%</Badge></Card.Title>
           <Card.Text>
             <LabelText before="Actual Price:" after={"$"+this.props.actual_price}/>
             <LabelText before="Estimated Value:" after={"$"+this.props.est_price}/>
@@ -622,9 +640,15 @@ function HouseListingsPage(){
   const zipcode = match?.[1];
   console.log("zupcode", zipcode); 
   const [returnData, setReturnData] = useState(null); 
+
+  const fixComma = (str) => {
+    str = str.replace('|', ',')
+    return str.replace('|', ',')
+  }
   useEffect(async () => {
     await axios.get(`http://localhost:8000/api/getzipcode/${zipcode}`).then((data) =>{
       console.log("success listings", data.data);
+      setReturnData(data.data);
     }).catch((err)=>console.log(err));
   }, [])
   let listings = {
@@ -657,16 +681,22 @@ function HouseListingsPage(){
   return(
     <div id="listings-page" className="page-container">
 
-      {returnData !== null ? <div>
+      {returnData !== null ? 
+      <div>
 
-        <div className="two-tone-text">
-      <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
-      </div>
-      <div id="listings">
-        {returnData.map(apt => (
-          <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={apt["imgUrl"]}/>
-        ))}
-      </div>
+          <div className="two-tone-text">
+              <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
+              </div>
+              <div id="listings">
+                {returnData.map(item => (
+                  <HouseCard  
+                  ranking={item.rating}
+                  actual_price={item.price} 
+                  est_price={item.estimatedPrice} 
+                  address={fixComma(item.address)} 
+                  picture={imgUrl.pop() || "https://images1.apartments.com/i2/osqFQBJdTApiDrjACIR1TEiHt62ZQuU3_SxcDmi_rPo/117/idora-oakland-ca-building-photo.jpg"}/>
+                ))}
+          </div>
 
       </div> 
       
@@ -674,16 +704,11 @@ function HouseListingsPage(){
       
       //conditiona;
       
-      : <div>
+      : 
+      
+      
+      <div>
         
-        <div className="two-tone-text">
-          <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
-          </div>
-          <div id="listings">
-            {Object.values(listings).map(apt => (
-              <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={apt["imgUrl"]}/>
-            ))}
-          </div>
       </div>}
           
     </div>

@@ -62,7 +62,7 @@ router.post('/api/getaddress', async (req,res) => {
     const {address} = req.body; 
     console.log(req.body); 
     console.log("address", address); 
-    const house = await House.findOne({address: address});
+    const house = await House.findOne({street: address});
     console.log(house); 
     res.send(house); 
 });

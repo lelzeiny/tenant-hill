@@ -55,15 +55,12 @@ const houseSchema = new mongoose.Schema({
             },
             comment:{
                 type:String, 
-
             },
             contact:{
                 type:String, 
-                required: true,
             },
             rating:{
                 type: Number, 
-                required: true,
             }
         }
     ]
