@@ -36,6 +36,7 @@ class Predict(Resource):
         temp = pd.DataFrame(list(args.values())[1:10])
         temp = temp.replace(["Yes", "No"], ['1', '0'])
         temp = temp.replace(["TRUE", "FALSE"], ['1', '0'])
+        temp = temp.replace(["True", "False"], ['1', '0'])
 
         X_new = np.fromiter(temp[0].to_list(), dtype=float)  # convert input to array
 
