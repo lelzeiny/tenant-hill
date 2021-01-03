@@ -136,7 +136,7 @@ code {
   align-items: center;
 }
 
-#welcome{
+.welcome{
   margin: 0px;
   width: 100%;
   height: 600px;
@@ -146,6 +146,9 @@ code {
   justify-content: center;
   text-align: center;
   background-image: url("./background.png");
+}
+#bg-2{
+  background-image: url("./background2.png");
 }
 #mission{
   height: 700px;
@@ -167,6 +170,15 @@ code {
   text-align: left;
   font-size: 18px;
   line-height: 32px;
+}
+
+#zipcode-page{
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #address-page{
@@ -219,9 +231,9 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 128px;
-  height: 128px;
-  border-radius: 64px;
+  width: 112px;
+  height: 112px;
+  border-radius: 56px;
   background-color: #febb79;
 }
 
@@ -229,9 +241,9 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 128px;
-  height: 128px;
-  border-radius: 64px;
+  width: 112px;
+  height: 112px;
+  border-radius: 56px;
   background-color: #cc773c;
 }
 
@@ -264,4 +276,15 @@ code {
   font-size: 24px;
   line-height: 0px;
   padding-bottom:6px;
+}
+
+.card-title{
+  font-family: 'Staatliches', cursive;
+  font-size: 24px;
+}
+
+#listings{
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
