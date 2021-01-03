@@ -3,7 +3,7 @@ import plus_icon from './add.png';
 import './App.css';
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Form, Button, FormControl, InputGroup, Modal } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, FormControl, InputGroup, Modal, Card } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Upload from './pages/Upload.js';
@@ -32,7 +32,7 @@ class NavBar extends React.Component{
           <Nav className="mr-auto">
             <Navbar.Brand href="/2424-Haste">Tenant Hill</Navbar.Brand>
             <Nav.Link href="/">Check a Price</Nav.Link>
-            <Nav.Link href="/">Find Deals</Nav.Link>
+            <Nav.Link href="/zipcode">Find Deals</Nav.Link>
           </Nav>
           <Form inline>
             <FormControl id="searchform" type="text" placeholder="Address" className="mr-sm-2" />
@@ -52,7 +52,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div id="home-page" className="page-container">
-        <div id="welcome">
+        <div className="welcome">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1>Good deals on your hill</h1>
           <Form inline>
@@ -65,6 +65,23 @@ class HomePage extends React.Component {
           <p>At Tenant Hill, our goal is to assist you in finding the most affordable, 'worth-it' living situation in your area. With housing insecurities on the rise during the pandemic, renters have found it increasingly difficult to face inflated prices and seemingly impossible living situations.</p>
           <p>We want to make sure you are being offered the best deals possible; with advanced machine learning techniques, we predict the price of an apartment in your area and compare it to the listing price to see if it's worth it for its price. Using features such as the available rooms, amenities,
              and area of the property, we ensure that everything is taken into account when deciding how to rate an apartment, just for you. Apartments also have testimonies from previous tenants, with whom you can chat and discuss whether or not it's the right place for you. We welcome you with open arms, the hill awaits!</p>
+        </div>
+      </div>
+    );
+  }
+}
+
+class ZipcodePage extends React.Component {
+  render() {
+    return (
+      <div id="zipcode-page" className="page-container">
+        <div className="welcome" id="bg-2">
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
+          <h1>Find Apartments Near You</h1>
+          <Form inline>
+            <FormControl type="text" placeholder="Zipcode" className="mr-sm-2" />
+            <Button variant="warning">Search</Button>
+          </Form>
         </div>
       </div>
     );
@@ -129,8 +146,8 @@ function CreateListing() {
               placeholder="Square footage"
             />
           </InputGroup>
-          <label class="container">&nbsp;&nbsp;Laundry<input type="checkbox"/> <span class="checkmark"></span></label>
-          <label class="container">&nbsp;&nbsp;Wifi<input type="checkbox"/> <span class="checkmark"></span></label>
+          <label class="container">&nbsp;&nbsp;&nbsp;Laundry<input type="checkbox"/> <span class="checkmark"></span></label>
+          <label class="container">&nbsp;&nbsp;&nbsp;Wifi<input type="checkbox"/> <span class="checkmark"></span></label>
           <br/>
         </Modal.Body>
         <Modal.Footer>
@@ -237,6 +254,49 @@ class AddressPage extends React.Component {
   }
 }
 
+class HouseCard extends React.Component{
+  render(){
+    return(
+      <Card style={{ width: '18rem', margin: "10px"}}>
+        <Card.Img variant="top" src={this.props.picture} />
+        <Card.Body>
+          <Card.Title class="card-title">{this.props.address}</Card.Title>
+          <Card.Text>
+            <div style={{display:"flex"}}>
+              <p style={{fontWeight: "bold", color: "#6181b0"}}>Actual Price:</p>
+              <p>&nbsp;${this.props.actual_price}</p>
+            </div>
+            <div style={{display:"flex"}}>
+              <p style={{fontWeight: "bold", color: "#6181b0"}}>Estimated Value:</p>
+              <p>&nbsp;${this.props.est_price}</p>
+            </div>
+          </Card.Text>
+          <Button variant="warning">More</Button>
+        </Card.Body>
+      </Card>
+    );
+  }
+}
+
+class HouseListingsPage extends React.Component{
+  render(){
+    return(
+      <div id="listings-page" className="page-container">
+        <div className="two-tone-text">
+        <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {this.props.zipcode}</span>
+        <div id="listings">
+          <HouseCard  actual_price="5000" est_price="5000" address="2424 Haste St" picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"/>
+          <HouseCard  actual_price="5000" est_price="5000" address="2424 Haste St" picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"/>
+          <HouseCard  actual_price="5000" est_price="5000" address="2424 Haste St" picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"/>
+          <HouseCard  actual_price="5000" est_price="5000" address="2424 Haste St" picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"/>
+          <HouseCard  actual_price="5000" est_price="5000" address="2424 Haste St" picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"/>
+          <HouseCard  actual_price="5000" est_price="5000" address="2424 Haste St" picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg"/>
+        </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 function App() {
   document.title = 'Tenant Hill';
@@ -247,6 +307,12 @@ function App() {
         <Switch>
           <Route path="/2424-Haste">
             <AddressPage picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg" address="2424 Haste Street" our_rating="Good" people_rating="68%"/>
+          </Route>
+          <Route path="/zipcode">
+            <ZipcodePage />
+          </Route>
+          <Route path="/listings">
+            <HouseListingsPage zipcode="95070"/>
           </Route>
           <Route path="/">
             <HomePage />
