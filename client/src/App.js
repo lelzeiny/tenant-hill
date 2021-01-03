@@ -1,21 +1,19 @@
 import logo from './logo.svg';
 import plus_icon from './add.png';
 import './App.css';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, setShow, show} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Row, Form, Button, FormControl, InputGroup, Modal, Card, OverlayTrigger, Popover, ListGroup } from 'react-bootstrap';
+import { Navbar, Nav, Row, Form, Button, FormControl, InputGroup, Modal, Card, OverlayTrigger, Popover, Badge } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
-import { BrowserRouter, Route, Switch, useLocation,Redirect,useHistory
- } from 'react-router-dom';
-import Upload from './pages/Upload.js';
-import Home from './pages/Home.js';
+import { BrowserRouter, Route, Switch, useLocation,Redirect,useHistory } from 'react-router-dom';
 import axios from 'axios'; 
-import Alert from './components/Alert'; 
+import imgUrl_ from './house_imgs.json';
+
+let imgUrl = Object.values(imgUrl_);
+console.log("img", imgUrl.pop())
 
 const NavBar = () => {
-  
-    const history = useHistory();
-
+  const history = useHistory();
 
     async function handleSubmit(e){
       e.preventDefault(); 
@@ -41,7 +39,7 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Navbar.Brand href="/apartment?id=2424-Haste">Tenant Hill</Navbar.Brand>
+            <Navbar.Brand href="/">Tenant Hill</Navbar.Brand>
             <Nav.Link href="/">Check a Price</Nav.Link>
             <Nav.Link href="/zipcode">Find Deals</Nav.Link>
           </Nav>
@@ -60,16 +58,25 @@ const NavBar = () => {
 
 
 
-class HomePage extends React.Component {
-  render() {
+const HomePage = () =>  {
+
+  const history = useHistory();
+
+  const onSubmitZip = (e) => {
+    e.preventDefault(); 
+    const zip = document.getElementById('zipcode').value; 
+    history.push(`listings?zipcode=${zip}`)
+  }
+
+ 
     return (
       <div id="home-page" className="page-container">
         <div className="welcome">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1>Good deals on your hill</h1>
           <Form inline>
-            <FormControl type="text" placeholder="Address" className="mr-sm-2" />
-            <Button variant="warning">Search</Button>
+            <FormControl id="zipcode" type="text" placeholder="Zip Code" className="mr-sm-2" />
+            <Button onClick={onSubmitZip} variant="warning">Search</Button>
           </Form>
         </div>
         <div id="mission">
@@ -80,7 +87,7 @@ class HomePage extends React.Component {
         </div>
       </div>
     );
-  }
+  
 }
 
 class LabelText extends React.Component{
@@ -141,9 +148,6 @@ class Review extends React.Component{
 }
 
 function CreateListing() {
-
-
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -292,21 +296,27 @@ function CreateListing() {
   );
 }
 
-const  CreateReview = (props) => {
+const CreateReview = (props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [rating, setRating] = useState(1);
+
+
+  
+
   const handleReview = async () => {
 
     const fullname = document.getElementById('fullname').value; 
     const fullemail = document.getElementById('fullemail').value; 
-    const rating = 1; 
+    
     const review = document.getElementById('thought').value; 
     console.log("rate", rating);
     console.log("fullname", fullname); 
     console.log("id", props.houseId); 
+  
     await axios.post(`http://localhost:8000/api/house/${props.houseId}`, {
       
         name: fullname, 
@@ -348,6 +358,10 @@ const  CreateReview = (props) => {
               name="create"
               editing={true}
               starCount={5}
+              value={rating}
+              onStarClick={ (nextValue, prevValue, name) => {
+                setRating(nextValue);
+              }}
             />
           <FormControl id="thought" as="textarea" placeholder="Pour your heart out." />
         </Modal.Body>
@@ -396,7 +410,6 @@ function AddressPage(props) {
     laundry: true,
     parking: false,
     estimatedPrice: 2000,
-    img_url: "",
     ratings:{
       "1230841234":{
         rating: 1,
@@ -486,7 +499,7 @@ function AddressPage(props) {
       </div>
       <div id="main-ratings">
         <div id="picture">
-          <img src={apt_data["imgUrl"]} height="350"/>
+          <img src={imgUrl.pop()} height="350"/>
         </div>
         <div className="main-cols">
           <h4 className="blackTextSmall"> List Price</h4>
@@ -549,12 +562,12 @@ class HouseCard extends React.Component{
       <Card style={{ width: '18rem', margin: "10px"}}>
         <Card.Img variant="top" src={this.props.picture} />
         <Card.Body>
-          <Card.Title class="card-title">{this.props.address}</Card.Title>
+          <Card.Title class="card-title">{this.props.address}<Badge variant="primary" style={{fontWeight: "lighter"}}>Rated {this.props.ranking}%</Badge></Card.Title>
           <Card.Text>
-            <LabelText key="Actual Price:" value={"$" + this.props.actual_price}/>
-            <LabelText key="Estimated Value:" value={"$" + this.props.est_price}/>
+            <LabelText before="Actual Price:" after={"$"+this.props.actual_price}/>
+            <LabelText before="Estimated Value:" after={"$"+this.props.est_price}/>
           </Card.Text>
-          <Button variant="warning">More</Button>
+          <Button className="peach">More</Button>
         </Card.Body>
       </Card>
     );
@@ -582,26 +595,26 @@ function HouseListingsPage(){
     "1234123545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 85,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     },
     "1234143545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 72,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     },
     "1236143545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 68,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     },
     "1234129545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 24,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     }
   }
   //send query to backend
@@ -616,7 +629,7 @@ function HouseListingsPage(){
               </div>
               <div id="listings">
                 {returnData.map(item => (
-                  <HouseCard  actual_price={item.price} est_price={item.price} address={fixComma(item.address)} picture="https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"/>
+                  <HouseCard  actual_price={item.price} est_price={item.price} address={fixComma(item.address)} picture="https://images1.apartments.com/i2/osqFQBJdTApiDrjACIR1TEiHt62ZQuU3_SxcDmi_rPo/117/idora-oakland-ca-building-photo.jpg"/>
                 ))}
           </div>
 

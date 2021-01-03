@@ -62,7 +62,7 @@ const commentOnHouse = async (req,res,next) => {
     const {name,comment,contact, rating} = req.body; 
     const house = await House.findById(id); 
     await House.findByIdAndUpdate(req.params.id, 
-        {   $push: {"reviews": {
+        {   $addToSet: {"reviews": {
                     name: name,
                     comment: comment,
                     contact: contact,
@@ -74,19 +74,14 @@ const commentOnHouse = async (req,res,next) => {
            
         }
         ,
-        (err) => {
-            console.log(err); 
+        () => {
+            
             console.log("successfully update job description"); 
         }
     )
 
 
-    // await House.findByIdAndUpdate(req.params.id, {
-    //     peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1),  
-    // }, (err) => {
-    //     console.log(err); 
-    //     console.log("update rating")
-    // })
+   
    
 }
 
