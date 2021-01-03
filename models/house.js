@@ -16,6 +16,37 @@ const houseSchema = new mongoose.Schema({
         type:Number,
 
     },
+    beds:{
+        type:Number, 
+    },
+    dog:{
+        type: Boolean, 
+
+    },
+    cat:{
+        type:Boolean,
+    },
+    dishwasher:{
+        type:Boolean, 
+    },
+    ac: {
+        type:Boolean, 
+    },
+    laundry:{
+        type:Boolean, 
+    },
+    parking:{
+        type:Boolean, 
+    },
+    gym: {
+        type:Boolean, 
+    },
+    zipcode: {
+        type:String, 
+    },
+    title: {
+        type:String, 
+    },
     reviews:
     [
         {
