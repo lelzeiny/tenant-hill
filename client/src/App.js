@@ -3,7 +3,7 @@ import plus_icon from './add.png';
 import './App.css';
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Form, Button, FormControl, InputGroup, Modal } from 'react-bootstrap';
+import { Col, Row, Navbar, Nav, Form, Button, FormControl, InputGroup, Modal, ListGroup } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 
 class NavBar extends React.Component{
@@ -117,27 +117,46 @@ class AddressPage extends React.Component {
         <div className="two-tone-text">
           <span className="blueText">The Deal</span>&nbsp;<span className="blackText">with {this.props.address}</span>
         </div>
+      
+
+        
+        
+              
+        
         <div id="main-ratings">
           <div id="picture">
             <img src={this.props.picture} height="350"/>
           </div>
-          <div className="rating-container">
-            <h4>Our Rating</h4>
-            <div className="rating"><h1>{this.props.our_rating}</h1></div>
-            <a href="#our-rating">See why &rsaquo;</a>
+          <div className="main-cols">
+            <h4 className="blackTextSmall"> List Price</h4>
+            <div className="rating"><h1>{this.props.actual_price}</h1></div>
+            
+            
+            <div className="rating-container">
+              <h4 className="blueTextSmall">The Anthill rated this...</h4>
+              
+              <div className="rating"><h1>{this.props.our_rating}</h1></div>
+              <a href="#our-rating">See why &rsaquo;</a>
+            </div>
           </div>
-          <div className="rating-container">
-            <h4>The People's Rating</h4>
-            <div className="rating"><h1>{this.props.people_rating}</h1></div>
-            <a href="#people-rating">See why &rsaquo;</a>
+          <div className="main-cols">
+            
+            <h4 className="blueTextSmall" > Estimated Price</h4>
+            <div className="rating"><h1>{this.props.estimated_price}</h1></div>
+
+            <div className="rating-container">
+              <h4 className="blackTextSmall">People rated this...</h4>
+              <div className="rating"><h1>{this.props.people_rating}</h1></div>
+              <a href="#people-rating">See why &rsaquo;</a>
+            </div>
           </div>
         </div>
         <div id="our-rating">
           <div className="two-tone-text">
             <span className="blueText">Our</span>&nbsp;&nbsp;<span className="blackText">Rating</span>
           </div>
-          <p>Your listing is valued at {this.props.actual_price} whereas we estimated the cost to be 
-          {this.props.estimated_price}. This is because it has {this.props.details}</p>
+          <p className="darkBlueTextSmall">Your listing is valued at {this.props.actual_price} whereas we estimated 
+          the cost to be {this.props.estimated_price}. This is because it has {this.props.details}</p>
         </div>
         <div id="people-rating">
           <div className="inline">
@@ -161,7 +180,9 @@ function App() {
     <div className="App">
       
       <NavBar />
-      <AddressPage picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg" address="2424 Haste Street" our_rating="Good" people_rating="68%"/>
+      <AddressPage picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg" 
+      address="2424 Haste Street" our_rating="Good" people_rating="68%"
+      estimated_price = "$1000" actual_price = "$1250" details="a breathtaking view of the mountains and a serial killer living next door."/>
     </div>
   );
 }

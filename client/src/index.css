@@ -31,6 +31,24 @@ h1{
   color: #6181b0;
 }
 
+.blackTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #15171d;
+}
+
+.blueTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
+}
+
+.darkBlueTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #34486a;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -80,13 +98,19 @@ code {
   background-color: black;
 }
 
+.main-cols{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .rating-container{
   margin: 10px;
   padding: 10px;
   width: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
 }
 
 .rating{
