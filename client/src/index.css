@@ -45,6 +45,18 @@ h1{
   user-select: none;
 }
 
+/* The checkbox container */
+.checkboxContainer {
+  display: block;
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  font-family: 'Staatliches', cursive;
+}
+
+
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
@@ -93,6 +105,23 @@ h1{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.blackTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #15171d;
+}
+
+.blueTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
+}
+
+.darkBlueTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #34486a;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -119,7 +148,7 @@ code {
   align-items: center;
 }
 
-#welcome{
+.welcome{
   margin: 0px;
   width: 100%;
   height: 600px;
@@ -129,6 +158,9 @@ code {
   justify-content: center;
   text-align: center;
   background-image: url("./background.png");
+}
+#bg-2{
+  background-image: url("./background2.png");
 }
 #mission{
   height: 700px;
@@ -150,6 +182,15 @@ code {
   text-align: left;
   font-size: 18px;
   line-height: 32px;
+}
+
+#zipcode-page{
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #address-page{
@@ -177,23 +218,45 @@ code {
   background-color: black;
 }
 
+.main-cols{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .rating-container{
   margin: 10px;
   padding: 10px;
   width: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
+}
+
+.rating-container a{
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
+  font-size: 18px;
 }
 
 .rating{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 128px;
-  height: 128px;
-  border-radius: 64px;
+  width: 112px;
+  height: 112px;
+  border-radius: 56px;
   background-color: #febb79;
+}
+
+.pricing{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 56px;
+  background-color: #cc773c;
 }
 
 .review{
@@ -232,13 +295,19 @@ code {
   font-size: 24px;
 }
 
+<<<<<<< HEAD
+=======
 #listings-page{
   display: block;
 }
 
+>>>>>>> 3ce955a0c5837809f92b75260feacbd6c85a06ca
 #listings{
   display:flex;
   justify-content: center;
   flex-wrap: wrap;
+<<<<<<< HEAD
+=======
   margin:auto;
+>>>>>>> 3ce955a0c5837809f92b75260feacbd6c85a06ca
 }

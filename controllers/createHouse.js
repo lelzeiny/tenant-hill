@@ -1,32 +1,77 @@
-
 const House = require('../models/house');
+const multer = require('multer');
+const {cloudinary} = require('../utils/cloudinary');
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads');
+//     },
+//     filename: (req, file, cb) => {
+//         console.log(file);
+//         cb(null, Date.now() + path.extname(file.originalname));
+//     }
+// });
+// const fileFilter = (req, file, cb) => {
+//     if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+//         cb(null, true);
+//     } else {
+//         cb(null, false);
+//     }
+// }
+// const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
 const addHouse = async (req,res,next) => {
-    const {address, price} = req.body; 
 
-    const user = await House.create({
-        address: address, 
-        price: price, 
-    }).then(() => {
-        console.log("register successfully"); 
-    });
 
-    res.send(user); 
+    console.log("getting to upload");
+    try {
+        const fileStr = req.body.data;
+        const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+            upload_preset: 'j4pfojws',
+        });
+        console.log(uploadResponse);
+
+
+        const {address, price} = req.body; 
+
+        const user = await House.create({
+            address: address, 
+            price: price, 
+            picture: uploadResponse.url,
+            peopleRating: 0,
+        }).then(() => {
+            console.log("register successfully"); 
+        });
+    
+        res.send(user); 
+       
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Something went wrong' });
+    }
+
+
+   
 
 }
 
 
-const commentOnHouse = (req,res,next) => {
+const commentOnHouse = async (req,res,next) => {
     const id = req.params.id;
-    const {name,comment,contact} = req.body; 
-    House.findByIdAndUpdate(req.params.id, 
-        {$push: {"reviews": {
-                name: name,
-                comment: comment,
-                contact: contact,
-               
-            }}
+    const {name,comment,contact, rating} = req.body; 
+    const house = await House.findById(id); 
+    await House.findByIdAndUpdate(req.params.id, 
+        {   $push: {"reviews": {
+                    name: name,
+                    comment: comment,
+                    contact: contact,
+                    rating: rating
+                }},
+            $set:{
+                peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1)
+            }
+           
         }
         ,
         (err) => {
@@ -34,6 +79,15 @@ const commentOnHouse = (req,res,next) => {
             console.log("successfully update job description"); 
         }
     )
+
+
+    // await House.findByIdAndUpdate(req.params.id, {
+    //     peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1),  
+    // }, (err) => {
+    //     console.log(err); 
+    //     console.log("update rating")
+    // })
+   
 }
 
 
@@ -63,10 +117,26 @@ const priceComparison = async (req,res,next) => {
 
 
 
+const findHouseByQuery = async (req,res) => {
+    const {address} = req.body;
+
+
+    console.log("query", address);
+
+    // const house = await House.findOne({address: query}).exec()
+
+
+    // res.send(house); 
+
+}
+
+
+
 
 
 module.exports = {
     addHouse,
     commentOnHouse,
-    priceComparison
+    priceComparison,
+    findHouseByQuery
 }

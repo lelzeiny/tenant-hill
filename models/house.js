@@ -12,6 +12,41 @@ const houseSchema = new mongoose.Schema({
     picture:{
         type:String, 
     },
+    peopleRating:{
+        type:Number,
+
+    },
+    beds:{
+        type:Number, 
+    },
+    dog:{
+        type: Boolean, 
+
+    },
+    cat:{
+        type:Boolean,
+    },
+    dishwasher:{
+        type:Boolean, 
+    },
+    ac: {
+        type:Boolean, 
+    },
+    laundry:{
+        type:Boolean, 
+    },
+    parking:{
+        type:Boolean, 
+    },
+    gym: {
+        type:Boolean, 
+    },
+    zipcode: {
+        type:String, 
+    },
+    title: {
+        type:String, 
+    },
     reviews:
     [
         {
@@ -24,8 +59,12 @@ const houseSchema = new mongoose.Schema({
             },
             contact:{
                 type:String, 
-                required: true
+                required: true,
             },
+            rating:{
+                type: Number, 
+                required: true,
+            }
         }
     ]
     
