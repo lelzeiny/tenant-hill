@@ -562,7 +562,7 @@ class HouseCard extends React.Component{
       <Card style={{ width: '18rem', margin: "10px"}}>
         <Card.Img variant="top" src={this.props.picture} />
         <Card.Body>
-          <Card.Title class="card-title">{this.props.address}<Badge variant="primary" style={{fontWeight: "lighter"}}>Rated {this.props.ranking}%</Badge></Card.Title>
+          <Card.Title class="card-title">{this.props.address}<Badge variant="primary" style={{fontWeight: "lighter"}}>{this.props.ranking}%</Badge></Card.Title>
           <Card.Text>
             <LabelText before="Actual Price:" after={"$"+this.props.actual_price}/>
             <LabelText before="Estimated Value:" after={"$"+this.props.est_price}/>
@@ -629,7 +629,12 @@ function HouseListingsPage(){
               </div>
               <div id="listings">
                 {returnData.map(item => (
-                  <HouseCard  actual_price={item.price} est_price={item.price} address={fixComma(item.address)} picture="https://images1.apartments.com/i2/osqFQBJdTApiDrjACIR1TEiHt62ZQuU3_SxcDmi_rPo/117/idora-oakland-ca-building-photo.jpg"/>
+                  <HouseCard  
+                  ranking={item.rating}
+                  actual_price={item.price} 
+                  est_price={item.estimatedPrice} 
+                  address={fixComma(item.address)} 
+                  picture="https://images1.apartments.com/i2/osqFQBJdTApiDrjACIR1TEiHt62ZQuU3_SxcDmi_rPo/117/idora-oakland-ca-building-photo.jpg"/>
                 ))}
           </div>
 
