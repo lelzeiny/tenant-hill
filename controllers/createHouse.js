@@ -67,16 +67,13 @@ const commentOnHouse = async (req,res,next) => {
                     comment: comment,
                     contact: contact,
                     rating: rating
-                }},
-            $set:{
-                peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1)
-            }
+                }}
            
         }
         ,
         () => {
             
-            console.log("successfully update job description"); 
+            console.log("successfully update comment"); 
         }
     )
 
