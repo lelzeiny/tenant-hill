@@ -45,6 +45,18 @@ h1{
   user-select: none;
 }
 
+/* The checkbox container */
+.checkboxContainer {
+  display: block;
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  font-family: 'Staatliches', cursive;
+}
+
+
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
