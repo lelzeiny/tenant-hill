@@ -44,9 +44,12 @@ export default function Upload() {
             //     headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin' : '*',
             //     'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS', },
             // })
-            await fetch('http://localhost:8000/api/upload', {
+            await fetch('http://localhost:8000/api/house', {
                 method: 'POST',
-                body: JSON.stringify({ data: base64EncodedImage }),
+                body: JSON.stringify({ data: base64EncodedImage,
+                address:"ahahahahah",
+                price: "1000",
+            }),
                 headers: { 'Content-Type': 'application/json' },
             });
             setFileInputState('');

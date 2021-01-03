@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Upload from './pages/Upload.js';
 import Home from './pages/Home.js';
 import axios from 'axios'; 
+import Alert from './components/Alert'; 
 class NavBar extends React.Component{
   render(){
 
@@ -108,10 +109,72 @@ class Review extends React.Component{
 }
 
 function CreateListing() {
+
+
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [fileInputState, setFileInputState] = useState('');
+  const [previewSource, setPreviewSource] = useState('');
+  const [selectedFile, setSelectedFile] = useState();
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+  const handleFileInputChange = (e) => {
+      console.log("address",  document.getElementById('address').value);
+      const file = e.target.files[0];
+      previewFile(file);
+      setSelectedFile(file);
+      setFileInputState(e.target.value);
+  };
+
+  const previewFile = (file) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+          setPreviewSource(reader.result);
+      };
+  };
+
+  const handleSubmitFile = (e) => {
+      e.preventDefault();
+      if (!selectedFile) return;
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onloadend = () => {
+          uploadImage(reader.result);
+      };
+      reader.onerror = () => {
+          console.error('AHHHHHHHH!!');
+          setErrMsg('something went wrong!');
+      };
+  };
+
+  const uploadImage = async (base64EncodedImage) => {
+
+      const getAdress = document.getElementById('address').value; 
+      const getPrice = document.getElementById('price').value;
+      const getSqrt = document.getElementById('sqrtft').value; 
+      console.log("address", getAdress);
+      try {
+          await fetch('http://localhost:8000/api/house', {
+              method: 'POST',
+              body: JSON.stringify({ data: base64EncodedImage,
+              address:getAdress,
+              price: getPrice,
+          }),
+              headers: { 'Content-Type': 'application/json' },
+          });
+          setFileInputState('');
+          setPreviewSource('');
+          setSuccessMsg('Image uploaded successfully');
+      } catch (err) {
+          console.error(err);
+          setErrMsg('Something went wrong!');
+      }
+  };
 
   return (
     <div style={{margin:"0px 8px"}}>
@@ -124,23 +187,23 @@ function CreateListing() {
           <Modal.Title>Add an Apartment to Tenant Hill</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <InputGroup className="mb-3">
+          <InputGroup  className="mb-3">
             <InputGroup.Prepend>
-              <InputGroup.Text>Address</InputGroup.Text>
+              <input id="address" placeholder="address" type="text" name="address"/>
             </InputGroup.Prepend>
             <FormControl placeholder="10000 Outer Space St"/>
           </InputGroup>
-          <InputGroup className="mb-3">
+          <InputGroup  className="mb-3">
             <InputGroup.Prepend>
-              <InputGroup.Text>$</InputGroup.Text>
+              <input id="price" placeholder="address" type="text" name="address"/>
             </InputGroup.Prepend>
             <FormControl
               placeholder="3000"
             />
           </InputGroup>
-          <InputGroup className="mb-3">
+          <InputGroup  className="mb-3">
             <InputGroup.Prepend>
-              <InputGroup.Text>Sq ft</InputGroup.Text>
+            <input id="sqrtft" placeholder="address" type="text" name="address"/>
             </InputGroup.Prepend>
             <FormControl
               placeholder="Square footage"
@@ -149,9 +212,24 @@ function CreateListing() {
           <label class="container">&nbsp;&nbsp;&nbsp;Laundry<input type="checkbox"/> <span class="checkmark"></span></label>
           <label class="container">&nbsp;&nbsp;&nbsp;Wifi<input type="checkbox"/> <span class="checkmark"></span></label>
           <br/>
+
+          {/* <Alert msg={errMsg} type="danger" />
+          <Alert msg={successMsg} type="success" /> */}
+         
+          <form className="form">
+              <input
+                  id="fileInput"
+                  type="file"
+                  name="image"
+                  onChange={handleFileInputChange}
+                  value={fileInputState}
+                  className="form-input"
+              />
+          </form>
+
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmitFile}>
             Submit
           </Button>
         </Modal.Footer>
@@ -160,11 +238,31 @@ function CreateListing() {
   );
 }
 
-function CreateReview() {
+const  CreateReview = (props) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleReview = async () => {
+
+    const fullname = document.getElementById('fullname').value; 
+    const fullemail = document.getElementById('fullemail').value; 
+    const rating = 1; 
+    const review = document.getElementById('thought').value; 
+    console.log("rate", rating);
+    console.log("fullname", fullname); 
+    console.log("id", props.houseId); 
+    await axios.post(`http://localhost:8000/api/house/${props.houseId}`, {
+      
+        name: fullname, 
+        comment: review,
+        contact: fullemail, 
+        rating: rating
+      
+    })
+
+  }
 
   return (
     <div>
@@ -181,13 +279,13 @@ function CreateReview() {
             <InputGroup.Prepend>
               <InputGroup.Text>Full Name</InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl placeholder="John Doe"/>
+            <FormControl id="fullname" placeholder="John Doe"/>
           </InputGroup>
           <InputGroup className="mb-3">
             <InputGroup.Prepend>
               <InputGroup.Text>Email</InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl
+            <FormControl id="fullemail"
               placeholder="Contact"
             />
           </InputGroup>
@@ -197,10 +295,10 @@ function CreateReview() {
               editing={true}
               starCount={5}
             />
-          <FormControl as="textarea" placeholder="Pour your heart out." />
+          <FormControl id="thought" as="textarea" placeholder="Pour your heart out." />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleReview}>
             Submit
           </Button>
         </Modal.Footer>
@@ -210,6 +308,10 @@ function CreateReview() {
 }
 
 class AddressPage extends React.Component {
+
+  constructor(props){
+    super(props);
+  }
   render() {
     return (
       <div id="address-page" className="page-container">
@@ -263,7 +365,7 @@ class AddressPage extends React.Component {
             <div className="two-tone-text">
               <span className="blueText">The People's</span>&nbsp;&nbsp;<span className="blackText">Rating</span>
             </div>
-            <CreateReview />
+            <CreateReview houseId={this.props.houseId}/>
           </div>
           <Review rating="1" name="John Doe" description="Makes for a good potato"></Review>
           <Review rating="5" name="Nhat Nguyen" description="Landlord didn’t give back the deposit, but also was always able to accomodate my wife and I throughout the pandemic. The water heater also leaks."></Review>
@@ -322,6 +424,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+
       <BrowserRouter>
         <Switch>
           <Route path="/2424-Haste">
@@ -340,6 +443,7 @@ function App() {
           </Route>
         </Switch>
       </BrowserRouter>
+
     </div>
   );
 }
