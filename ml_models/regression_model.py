@@ -21,11 +21,12 @@ def train(X, y):
 
 if __name__ == '__main__':
     
-    housing_data = pd.read_csv('ml_models/prediction_data.csv')
+    housing_data = pd.read_csv('listings-2.csv')
     housing_data = housing_data.set_index('address')
     X, y = housing_data.iloc[:,:-1], housing_data.iloc[:, -1]
+    X = X.replace(["TRUE", "FALSE"], ['1', '0'])
     mdl = train(X, y)
 
     #serialize model
-    joblib.dump(mdl, 'ml_models/housing.mdl')
+    joblib.dump(mdl, 'housing.mdl')
     
