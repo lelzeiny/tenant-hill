@@ -8,6 +8,8 @@ import StarRatingComponent from 'react-star-rating-component';
 import { BrowserRouter, Route, Switch, useLocation,Redirect,useHistory } from 'react-router-dom';
 import axios from 'axios'; 
 import imgUrl_ from './house_imgs.json';
+import street_addresses from './street-addresses.json';
+import Autosuggest from 'react-autosuggest';
 
 let imgUrl = Object.values(imgUrl_);
 
@@ -50,21 +52,85 @@ const NavBar = () => {
           <CreateListing/>
         </Navbar.Collapse>
       </Navbar> 
-     
-    )
-  
+    );
 }
 
+let apts = street_addresses;
 
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getSuggestions(value) {
+  const escapedValue = escapeRegexCharacters(value.trim());
+  
+  if (escapedValue === '') {
+    return [];
+  }
+
+  const regex = new RegExp('^' + escapedValue, 'i');
+
+  return apts.filter(apt => regex.test(apt.street));
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion.street;
+}
+
+function renderSuggestion(suggestion) {
+  return (
+    <span>{suggestion.street}</span>
+  );
+}
 
 class HomePage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: '',
+      suggestions: []
+    };    
+  }
+
+  onChange = (event, { newValue, method }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+  
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value)
+    });
+  };
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
   render() {
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: "2424 BrilliAnt Way",
+      value,
+      onChange: this.onChange
+    };
+
     return (
       <div id="home-page" className="page-container">
         <div className="welcome">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1>Good deals on your hill</h1>
           <Form inline>
+            <Autosuggest 
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps} />
             <FormControl type="text" placeholder="Address" className="mr-sm-2" />
             <Button variant="warning">Search</Button>
           </Form>
@@ -215,25 +281,21 @@ function CreateListing() {
         <Modal.Body>
           <InputGroup  className="mb-3">
             <InputGroup.Prepend>
-              <input id="address" placeholder="address" type="text" name="address"/>
+              <InputGroup.Text>Address</InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl placeholder="10000 Outer Space St"/>
+            <FormControl id="address" placeholder="10000 Outer Space St"/>
           </InputGroup>
           <InputGroup  className="mb-3">
             <InputGroup.Prepend>
-              <input id="price" placeholder="address" type="text" name="address"/>
+              <InputGroup.Text>$</InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl
-              placeholder="3000"
-            />
+            <FormControl id="price" placeholder="3000"/>
           </InputGroup>
           <InputGroup  className="mb-3">
             <InputGroup.Prepend>
-            <input id="sqrtft" placeholder="address" type="text" name="address"/>
+              <InputGroup.Text>sq ft.</InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl
-              placeholder="Square footage"
-            />
+            <FormControl id="sqrtft" placeholder="Square footage"/>
           </InputGroup>
 
           <label class="container"> <input type="checkbox" id="dogs"/><span class="checkmark"></span>
@@ -419,11 +481,11 @@ function AddressPage(props) {
       </div>
       <div id="main-ratings">
         <div id="picture">
-          <img src={returnData.picture} height="350"/>
+          <img src={imgUrl.pop()} height="350"/>
         </div>
         <div className="main-cols">
           <h4 className="blackTextSmall"> List Price</h4>
-          <div className="pricing"><h1>{returnData.price}</h1></div>
+          <div className="pricing"><h1>${returnData.price}</h1></div>
           
           
           <div className="rating-container">
@@ -436,7 +498,7 @@ function AddressPage(props) {
         <div className="main-cols">
           
           <h4 className="blackTextSmall" > Estimated Price</h4>
-          <div className="pricing"><h1>{apt_data["estimatedPrice"]}</h1></div>
+          <div className="pricing"><h1>${apt_data["estimatedPrice"]}</h1></div>
 
           <div className="rating-container">
             <h4 className="blackTextSmall">People rated this...</h4>

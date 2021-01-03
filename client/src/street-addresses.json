@@ -1,0 +1,596 @@
+[
+ {
+   "street": "1500 San Pablo Ave"
+ },
+ {
+   "street": "2631 Durant Ave"
+ },
+ {
+   "street": "2024 Durant Ave"
+ },
+ {
+   "street": "512 El Cerrito Plz"
+ },
+ {
+   "street": "2055 Center St"
+ },
+ {
+   "street": "2010 5th St"
+ },
+ {
+   "street": "2121 Dwight Way"
+ },
+ {
+   "street": "1300 Delaware St"
+ },
+ {
+   "street": "2038 Parker St"
+ },
+ {
+   "street": "1801 Shattuck Ave"
+ },
+ {
+   "street": "1950 Addison St"
+ },
+ {
+   "street": "5110 Telegraph Ave"
+ },
+ {
+   "street": "5239 Claremont Ave"
+ },
+ {
+   "street": "6301 Shellmound St"
+ },
+ {
+   "street": "2315 College Ave"
+ },
+ {
+   "street": "3015 San Pablo Ave"
+ },
+ {
+   "street": "2398 Bancroft Way"
+ },
+ {
+   "street": "1122 University Ave"
+ },
+ {
+   "street": "1260-1290 Hopkins St"
+ },
+ {
+   "street": "6401 Shellmound St"
+ },
+ {
+   "street": "1333 Powell St"
+ },
+ {
+   "street": "2119 University Ave"
+ },
+ {
+   "street": "2539 Telegraph Ave"
+ },
+ {
+   "street": "2461 Warring St"
+ },
+ {
+   "street": "1500 San Pablo Ave"
+ },
+ {
+   "street": "2631 Durant Ave"
+ },
+ {
+   "street": "2024 Durant Ave"
+ },
+ {
+   "street": "512 El Cerrito Plz"
+ },
+ {
+   "street": "2055 Center St"
+ },
+ {
+   "street": "2010 5th St"
+ },
+ {
+   "street": "2121 Dwight Way"
+ },
+ {
+   "street": "1300 Delaware St"
+ },
+ {
+   "street": "2038 Parker St"
+ },
+ {
+   "street": "1801 Shattuck Ave"
+ },
+ {
+   "street": "1950 Addison St"
+ },
+ {
+   "street": "5110 Telegraph Ave"
+ },
+ {
+   "street": "5239 Claremont Ave"
+ },
+ {
+   "street": "6301 Shellmound St"
+ },
+ {
+   "street": "2315 College Ave"
+ },
+ {
+   "street": "3015 San Pablo Ave"
+ },
+ {
+   "street": "2398 Bancroft Way"
+ },
+ {
+   "street": "1122 University Ave"
+ },
+ {
+   "street": "1260-1290 Hopkins St"
+ },
+ {
+   "street": "6401 Shellmound St"
+ },
+ {
+   "street": "1333 Powell St"
+ },
+ {
+   "street": "2119 University Ave"
+ },
+ {
+   "street": "2539 Telegraph Ave"
+ },
+ {
+   "street": "2461 Warring St"
+ },
+ {
+   "street": "2486-2490 Channing Way"
+ },
+ {
+   "street": "1951 Chestnut St"
+ },
+ {
+   "street": "1901 Dwight Way"
+ },
+ {
+   "street": "2013 2nd St"
+ },
+ {
+   "street": "2510 Channing Way"
+ },
+ {
+   "street": "1812 University Ave"
+ },
+ {
+   "street": "2020 4th St"
+ },
+ {
+   "street": "1910-1916 Oxford St"
+ },
+ {
+   "street": "3001 Telegraph Ave"
+ },
+ {
+   "street": "2709 Dwight Way"
+ },
+ {
+   "street": "6350 Christie Ave"
+ },
+ {
+   "street": "6399 Christie Ave"
+ },
+ {
+   "street": "1465 65th St"
+ },
+ {
+   "street": "2311 Le Conte Ave"
+ },
+ {
+   "street": "409 Evelyn Ave"
+ },
+ {
+   "street": "1801 University Ave"
+ },
+ {
+   "street": "2030 Blake St"
+ },
+ {
+   "street": "2060 McGee Ave"
+ },
+ {
+   "street": "2606 Fulton St"
+ },
+ {
+   "street": "1521 Milvia St"
+ },
+ {
+   "street": "3219 King St"
+ },
+ {
+   "street": "5204 Lawton Ave"
+ },
+ {
+   "street": "6 Commodore Dr"
+ },
+ {
+   "street": "El Cerrito"
+ },
+ {
+   "street": "555 Pierce St"
+ },
+ {
+   "street": "1 Captain Dr"
+ },
+ {
+   "street": "5234 Redondo Ave"
+ },
+ {
+   "street": "1162 53rd St"
+ },
+ {
+   "street": "1031 57th St"
+ },
+ {
+   "street": "2708 Channing Way"
+ },
+ {
+   "street": "1609 Bonita Ave"
+ },
+ {
+   "street": "2629 Piedmont Ave"
+ },
+ {
+   "street": "2629 Piedmont Ave"
+ },
+ {
+   "street": "2800 Kelsey St"
+ },
+ {
+   "street": "2327 Browning St"
+ },
+ {
+   "street": "2623 Virginia St"
+ },
+ {
+   "street": "2129 Stuart St"
+ },
+ {
+   "street": "1631 Julia St"
+ },
+ {
+   "street": "1633 62nd St"
+ },
+ {
+   "street": "2029 Channing Way"
+ },
+ {
+   "street": "1805 Bonita Ave"
+ },
+ {
+   "street": "2952 Stanton St"
+ },
+ {
+   "street": "3031 Fulton St"
+ },
+ {
+   "street": "1841 Fairview St"
+ },
+ {
+   "street": "1714 Fairview St"
+ },
+ {
+   "street": "2408 California St"
+ },
+ {
+   "street": "1254 65th St"
+ },
+ {
+   "street": "510 Liberty St"
+ },
+ {
+   "street": "4801 Harbord Dr"
+ },
+ {
+   "street": "600 62nd St"
+ },
+ {
+   "street": "4 Admiral Dr"
+ },
+ {
+   "street": "530 59th St"
+ },
+ {
+   "street": "El Cerrito"
+ },
+ {
+   "street": "6141 Hill Rd"
+ },
+ {
+   "street": "823 Santa Fe Ave"
+ },
+ {
+   "street": "5844 Margarido Dr"
+ },
+ {
+   "street": "1263 66th St"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "6400 Christie Ave"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "6465 San Pablo Ave"
+ },
+ {
+   "street": "635 Kains Ave"
+ },
+ {
+   "street": "555 Pierce St"
+ },
+ {
+   "street": "3 Commodore Dr"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "2091 California St"
+ },
+ {
+   "street": "1379 Harmon St"
+ },
+ {
+   "street": "2344 Fulton St"
+ },
+ {
+   "street": "2510 Bancroft Way"
+ },
+ {
+   "street": "982 University Ave"
+ },
+ {
+   "street": "1614 Alcatraz Ave"
+ },
+ {
+   "street": "1415 Seventh St"
+ },
+ {
+   "street": "1635 Francisco St"
+ },
+ {
+   "street": "2019 Seventh St"
+ },
+ {
+   "street": "1947 Oregon St"
+ },
+ {
+   "street": "1510 Prince St"
+ },
+ {
+   "street": "2510 Bancroft Way"
+ },
+ {
+   "street": "2305 California St"
+ },
+ {
+   "street": "2605 Haste St"
+ },
+ {
+   "street": "1846 Spruce St"
+ },
+ {
+   "street": "2433 Seventh St"
+ },
+ {
+   "street": "1846 Spruce St"
+ },
+ {
+   "street": "809 Folger Ave"
+ },
+ {
+   "street": "2930 Martin Luther King Jr Way"
+ },
+ {
+   "street": "1627 Parker St"
+ },
+ {
+   "street": "1736 Parker St"
+ },
+ {
+   "street": "1445 Russell St"
+ },
+ {
+   "street": "840 Ensenada Ave"
+ },
+ {
+   "street": "1634 Blake St"
+ },
+ {
+   "street": "1633 Sixth St"
+ },
+ {
+   "street": "319 The Spiral"
+ },
+ {
+   "street": "2818 Mabel St"
+ },
+ {
+   "street": "64 Panoramic Way"
+ },
+ {
+   "street": "1825 Highland Pl"
+ },
+ {
+   "street": "2218 Parker St"
+ },
+ {
+   "street": "1018 Jones St"
+ },
+ {
+   "street": "2500 Durant Ave"
+ },
+ {
+   "street": "2004 University Ave"
+ },
+ {
+   "street": "1627 University Ave"
+ },
+ {
+   "street": "925 Madison St"
+ },
+ {
+   "street": "2 Anchor Dr"
+ },
+ {
+   "street": "206 Sea View Dr"
+ },
+ {
+   "street": "5540 S Doyle St"
+ },
+ {
+   "street": "886 53rd St"
+ },
+ {
+   "street": "1322 65th St"
+ },
+ {
+   "street": "6400 Christie Ave"
+ },
+ {
+   "street": "551 Aileen St"
+ },
+ {
+   "street": "5622 Martin Luther King Jr Way"
+ },
+ {
+   "street": "556 Alcatraz Ave"
+ },
+ {
+   "street": "6400 Christie Ave"
+ },
+ {
+   "street": "5484 Vicente Way"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "320 Caldecott Ln"
+ },
+ {
+   "street": "1221 Brighton Ave"
+ },
+ {
+   "street": "6315 Shattuck Ave"
+ },
+ {
+   "street": "240 Caldecott Ln"
+ },
+ {
+   "street": "6400 Christie Ave"
+ },
+ {
+   "street": "1175 54th St"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "8 Captain Dr"
+ },
+ {
+   "street": "323 63rd St"
+ },
+ {
+   "street": "4 Commodore Dr"
+ },
+ {
+   "street": "1 Captain Dr"
+ },
+ {
+   "street": "6400 Christie Ave"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "2 Anchor Dr"
+ },
+ {
+   "street": "7 Captain Dr"
+ },
+ {
+   "street": "908 55th St"
+ },
+ {
+   "street": "6017 Christie Ave"
+ },
+ {
+   "street": "5502 Beaudry St"
+ },
+ {
+   "street": "2 Commodore Dr"
+ },
+ {
+   "street": "8 Commodore Dr"
+ },
+ {
+   "street": "708 62nd St"
+ },
+ {
+   "street": "132 Ashbury Ave"
+ },
+ {
+   "street": "1221 Brighton Ave"
+ },
+ {
+   "street": "5907 Marshall St"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "5773 Martin Luther King Jr Way"
+ },
+ {
+   "street": "8 Admiral Dr"
+ },
+ {
+   "street": "3 Commodore Dr"
+ },
+ {
+   "street": "8 Commodore Dr"
+ },
+ {
+   "street": "5758 Romany Rd"
+ },
+ {
+   "street": "6363 Christie Ave"
+ },
+ {
+   "street": "3 Commodore Dr"
+ },
+ {
+   "street": "545 Pierce St"
+ },
+ {
+   "street": "3 Captain Dr"
+ },
+ {
+   "street": "1504 Albany Terrace"
+ },
+ {
+   "street": "4 Commodore Dr"
+ },
+ {
+   "street": "3 Admiral Dr"
+ },
+ {
+   "street": "3 Captain Dr"
+ }
+]
