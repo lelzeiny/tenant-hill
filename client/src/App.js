@@ -8,8 +8,11 @@ import StarRatingComponent from 'react-star-rating-component';
 import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
 import Upload from './pages/Upload.js';
 import Home from './pages/Home.js';
-import axios from 'axios';
-
+import axios from 'axios'; 
+import Alert from './components/Alert'; 
+import {Autocomplete} from 'react-autocomplete';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 class NavBar extends React.Component{
   render(){
 
@@ -36,6 +39,7 @@ class NavBar extends React.Component{
             <Nav.Link href="/zipcode">Find Deals</Nav.Link>
           </Nav>
           <Form inline>
+           
             <FormControl id="searchform" type="text" placeholder="Address" className="mr-sm-2" />
             <Button onClick={handleSubmit} variant="outline-light">Search</Button>
           </Form>
