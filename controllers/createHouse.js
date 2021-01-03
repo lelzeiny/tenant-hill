@@ -68,7 +68,9 @@ const commentOnHouse = async (req,res,next) => {
                     contact: contact,
                     rating: rating
                 }},
-            
+            $set:{
+                peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1)
+            }
            
         }
         ,
@@ -79,12 +81,12 @@ const commentOnHouse = async (req,res,next) => {
     )
 
 
-    await House.findByIdAndUpdate(req.params.id, {
-        peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1),  
-    }, (err) => {
-        console.log(err); 
-        console.log("update rating")
-    })
+    // await House.findByIdAndUpdate(req.params.id, {
+    //     peopleRating: ((house.peopleRating)*(house.reviews.length) + rating)/((house.reviews.length) + 1),  
+    // }, (err) => {
+    //     console.log(err); 
+    //     console.log("update rating")
+    // })
    
 }
 
