@@ -93,6 +93,23 @@ h1{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.blackTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #15171d;
+}
+
+.blueTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
+}
+
+.darkBlueTextSmall{
+  font-size: 26px;
+  font-family: 'Staatliches', cursive;
+  color: #34486a;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -177,13 +194,25 @@ code {
   background-color: black;
 }
 
+.main-cols{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .rating-container{
   margin: 10px;
   padding: 10px;
   width: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
+}
+
+.rating-container a{
+  font-family: 'Staatliches', cursive;
+  color: #6181b0;
+  font-size: 18px;
 }
 
 .rating{
@@ -194,6 +223,16 @@ code {
   height: 128px;
   border-radius: 64px;
   background-color: #febb79;
+}
+
+.pricing{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 128px;
+  height: 128px;
+  border-radius: 64px;
+  background-color: #cc773c;
 }
 
 .review{
