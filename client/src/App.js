@@ -567,9 +567,15 @@ function HouseListingsPage(){
   const zipcode = match?.[1];
   console.log("zupcode", zipcode); 
   const [returnData, setReturnData] = useState(null); 
+
+  const fixComma = (str) => {
+    str = str.replace('|', ',')
+    return str.replace('|', ',')
+  }
   useEffect(async () => {
     await axios.get(`http://localhost:8000/api/getzipcode/${zipcode}`).then((data) =>{
       console.log("success listings", data.data);
+      setReturnData(data.data);
     }).catch((err)=>console.log(err));
   }, [])
   let listings = {
@@ -602,16 +608,17 @@ function HouseListingsPage(){
   return(
     <div id="listings-page" className="page-container">
 
-      {returnData !== null ? <div>
+      {returnData !== null ? 
+      <div>
 
-        <div className="two-tone-text">
-      <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
-      </div>
-      <div id="listings">
-        {returnData.map(apt => (
-          <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={apt["imgUrl"]}/>
-        ))}
-      </div>
+          <div className="two-tone-text">
+              <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
+              </div>
+              <div id="listings">
+                {returnData.map(item => (
+                  <HouseCard  actual_price={item.price} est_price={item.price} address={fixComma(item.address)} picture="https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"/>
+                ))}
+          </div>
 
       </div> 
       
@@ -619,16 +626,11 @@ function HouseListingsPage(){
       
       //conditiona;
       
-      : <div>
+      : 
+      
+      
+      <div>
         
-        <div className="two-tone-text">
-          <span className="blackText">Exuber</span><span className="blueText">Ant</span>&nbsp;<span className="blackText">Deals in {zipcode}</span>
-          </div>
-          <div id="listings">
-            {Object.values(listings).map(apt => (
-              <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={apt["imgUrl"]}/>
-            ))}
-          </div>
       </div>}
           
     </div>
