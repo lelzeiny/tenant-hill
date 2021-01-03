@@ -48,10 +48,32 @@ router.post('/api/findhouse', async (req,res) => {
     console.log("address", address); 
     const house = await House.findOne({address: address}).exec();
     console.log(house); 
-    axios.post('http://localhost:1080/predict', {
-        house: house, 
+    const realPrice = parseFloat(house.price)
+    await axios.post('http://localhost:1080/predict', {
+        address: house.address,
+        zipcode: "93642",
+        beds: 1,
+        dog: "TRUE",
+        cat: "TRUE",
+        dishwasher: "TRUE",
+        ac: "TRUE",
+        laundry: "TRUE",
+        parking: "TRUE",
+        gym: "FALSE",	
+        price : realPrice
+    }).then((data) => {
+        console.log("data",data.data);
+        return res.send({
+            house: house, 
+            estimatedPrice: data.data.estimatedPrice,
+            rating: data.data.rating,
+        })
+    }).catch((err) => {
+        console.log("err", err)
     });
-    res.send(house); 
+    res.send({
+        status: "done"
+    }); 
 });
 router.get('/api/house/price/:id', priceComparison); 
 

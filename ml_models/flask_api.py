@@ -46,7 +46,7 @@ class Predict(Resource):
             error = (abs(predicted_price - actual_price) / abs(actual_price))
             rating = 1 - error
 
-        out = {'Estimated Price': predicted_price, 'Rating': rating * 100}
+        out = {'estimatedPrice': predicted_price, 'rating': rating * 100}
 
         return out, 200
 
