@@ -5,7 +5,7 @@ import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav, Form, Button, FormControl, InputGroup, Modal } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Upload from './pages/Upload.js';
 import Home from './pages/Home.js';
 import axios from 'axios'; 
