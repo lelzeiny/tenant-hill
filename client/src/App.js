@@ -10,36 +10,58 @@ import Upload from './pages/Upload.js';
 import Home from './pages/Home.js';
 import axios from 'axios'; 
 class NavBar extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      item: null, 
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  async handleSubmit(e){
+    e.preventDefault(); 
+    const nameValue = document.getElementById("searchform").value;
+    console.log("value", nameValue); 
+    console.log("item", this.state.item); 
+    await axios.post('http://localhost:8000/api/findhouse', {
+      
+        address: nameValue
+      
+    }).then((data) => {
+      console.log(data); 
+      this.setState({
+        item: data.data, 
+      })
+      console.log("send successfully");
+      //onClick={handleSubmit}
+    })
+  };
+
+
   render(){
 
-    async function handleSubmit(e){
-      e.preventDefault(); 
-      const nameValue = document.getElementById("searchform").value;
-      console.log("value", nameValue); 
-      
-      await axios.post('http://localhost:8000/api/findhouse', {
-        
-          address: nameValue
-        
-      }).then(() => {
-        console.log("send successfully");
-      })
-    }
+    
     return(
-       <Navbar id="navbar" variant="dark" expand="lg">
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Navbar.Brand href="#home">Tenant Hill</Navbar.Brand>
-            <Nav.Link href="#home">Home</Nav.Link>
-          </Nav>
-          <Form inline>
-            <FormControl id="searchform" type="text" placeholder="Address" className="mr-sm-2" />
-            <Button onClick={handleSubmit} variant="outline-light">Search</Button>
-          </Form>
-        </Navbar.Collapse>
-      </Navbar> 
-     
+      <div>
+        <Navbar id="navbar" variant="dark" expand="lg">
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Navbar.Brand href="#home">Tenant Hill</Navbar.Brand>
+              <Nav.Link href="#home">Home</Nav.Link>
+            </Nav>
+            <Form inline>
+              <FormControl id="searchform" type="text" placeholder="Address" className="mr-sm-2" />
+              <Button onClick={this.handleSubmit}  variant="outline-light">Search</Button>
+            </Form>
+          </Navbar.Collapse>
+        </Navbar> 
+        {this.state.item === null ? <div></div> : 
+           <AddressPage picture={this.state.item.picture} address="2424 Haste Street" our_rating="Good" people_rating="68%"/>
+        }
+        
+      </div>
+      
     )
   }
 }
@@ -178,16 +200,16 @@ function App() {
   return (
     <div className="App">
 
-        <Router>
-         
-          
-         <Switch>
-             <Route component={Upload} path="/upload" />
-             <Route component={Home} path="/home" />
-         </Switch>
+      <Router>
+        
+        
+        <Switch>
+            <Route component={Upload} path="/upload" />
+            <Route component={Home} path="/home" />
+        </Switch>
      </Router>
       
-      <NavBar />
+      <NavBar/>
       {/* <AddressPage picture="https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2F0x0.jpg" address="2424 Haste Street" our_rating="Good" people_rating="68%"/> */}
     </div>
   );
