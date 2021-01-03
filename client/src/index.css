@@ -295,19 +295,24 @@ code {
   font-size: 24px;
 }
 
-<<<<<<< HEAD
-=======
 #listings-page{
   display: block;
 }
 
->>>>>>> 3ce955a0c5837809f92b75260feacbd6c85a06ca
 #listings{
   display:flex;
   justify-content: center;
   flex-wrap: wrap;
-<<<<<<< HEAD
-=======
   margin:auto;
->>>>>>> 3ce955a0c5837809f92b75260feacbd6c85a06ca
+}
+
+.ranking{
+  font-family: 'Staatliches', cursive;
+  color: #febb79;
+  line-height:5px;
+  font-size: 24px;
+}
+
+.peach{
+  background-color: #febb79;
 }

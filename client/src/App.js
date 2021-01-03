@@ -3,16 +3,14 @@ import plus_icon from './add.png';
 import './App.css';
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Row, Form, Button, FormControl, InputGroup, Modal, Card, OverlayTrigger, Popover, ListGroup } from 'react-bootstrap';
+import { Navbar, Nav, Row, Form, Button, FormControl, InputGroup, Modal, Card, OverlayTrigger, Popover, Badge } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
-import Upload from './pages/Upload.js';
-import Home from './pages/Home.js';
 import axios from 'axios'; 
-import Alert from './components/Alert'; 
-import {Autocomplete} from 'react-autocomplete';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import imgUrl_ from './house_imgs.json';
+
+let imgUrl = Object.values(imgUrl_);
+
 class NavBar extends React.Component{
   render(){
 
@@ -134,9 +132,6 @@ class Review extends React.Component{
 }
 
 function CreateListing() {
-
-
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -286,7 +281,7 @@ function CreateListing() {
 }
 
 const  CreateReview = (props) => {
-  const [show, setShow] = useState(false);
+  const { rating } = 1;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -294,8 +289,7 @@ const  CreateReview = (props) => {
   const handleReview = async () => {
 
     const fullname = document.getElementById('fullname').value; 
-    const fullemail = document.getElementById('fullemail').value; 
-    const rating = 1; 
+    const fullemail = document.getElementById('fullemail').value;
     const review = document.getElementById('thought').value; 
     console.log("rate", rating);
     console.log("fullname", fullname); 
@@ -336,11 +330,15 @@ const  CreateReview = (props) => {
               placeholder="Contact"
             />
           </InputGroup>
+          <label class="container"> <input type="checkbox" id="opt-in"/><span class="checkmark"></span>
+            <label for="contact" class="checkboxContainer">&nbsp;&nbsp;&nbsp;Allow Contact From Residents</label>
+          </label>
           <br/>
           <StarRatingComponent id="rate" className="star"
               name="create"
               editing={true}
               starCount={5}
+              value={rating}
             />
           <FormControl id="thought" as="textarea" placeholder="Pour your heart out." />
         </Modal.Body>
@@ -373,7 +371,6 @@ function AddressPage(props) {
     laundry: true,
     parking: false,
     estimatedPrice: 2000,
-    img_url: "",
     ratings:{
       "1230841234":{
         rating: 1,
@@ -402,7 +399,7 @@ function AddressPage(props) {
       </div>
       <div id="main-ratings">
         <div id="picture">
-          <img src={apt_data["imgUrl"]} height="350"/>
+          <img src={imgUrl.pop()} height="350"/>
         </div>
         <div className="main-cols">
           <h4 className="blackTextSmall"> List Price</h4>
@@ -462,12 +459,12 @@ class HouseCard extends React.Component{
       <Card style={{ width: '18rem', margin: "10px"}}>
         <Card.Img variant="top" src={this.props.picture} />
         <Card.Body>
-          <Card.Title class="card-title">{this.props.address}</Card.Title>
+          <Card.Title class="card-title">{this.props.address}<Badge variant="primary" style={{fontWeight: "lighter"}}>Rated {this.props.ranking}%</Badge></Card.Title>
           <Card.Text>
-            <LabelText key="Actual Price:" value={"$" + this.props.actual_price}/>
-            <LabelText key="Estimated Value:" value={"$" + this.props.est_price}/>
+            <LabelText before="Actual Price:" after={"$"+this.props.actual_price}/>
+            <LabelText before="Estimated Value:" after={"$"+this.props.est_price}/>
           </Card.Text>
-          <Button variant="warning">More</Button>
+          <Button className="peach">More</Button>
         </Card.Body>
       </Card>
     );
@@ -482,26 +479,26 @@ function HouseListingsPage(){
     "1234123545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 85,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     },
     "1234143545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 72,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     },
     "1236143545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 68,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     },
     "1234129545":{
       price: 1200,
       estimatedPrice: 1400,
-      address: "1500 San Pablo Ave Berkeley, CA 94702",
-      imgUrl: "https://images1.apartments.com/i2/7kCLBEyMGq-247cAWJ3Iklr29Z06oUTRATGlL4sbZHc/111/berkeley-central-berkeley-ca-primary-photo.jpg"
+      rating: 24,
+      address: "1500 San Pablo Ave Berkeley, CA 94702"
     }
   }
   //send query to backend
@@ -512,7 +509,7 @@ function HouseListingsPage(){
       </div>
       <div id="listings">
         {Object.values(listings).map(apt => (
-          <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={apt["imgUrl"]}/>
+          <HouseCard  actual_price={apt["price"].toString()} est_price={apt["estimatedPrice"].toString()} address={apt["address"]} picture={imgUrl.pop()} ranking={apt["rating"]}/>
         ))}
       </div>
     </div>
